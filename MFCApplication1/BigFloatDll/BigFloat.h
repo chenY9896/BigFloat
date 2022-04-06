@@ -30,7 +30,7 @@ class DLL_API BigFloat
 {
 private:
 	deque <int> integer;//大整数
-	int exponent;//阶码
+	int exponent;//指数
 	bool tag;//符号
 	static int ACCURACY;//除法精度
 	void trim();//标准化

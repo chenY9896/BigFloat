@@ -8,7 +8,7 @@ using namespace std;
 const BigFloat BigFloat::ZERO = BigFloat((string("0")));
 const BigFloat BigFloat::ONE = BigFloat((string("1")));
 const BigFloat BigFloat::TEN = BigFloat((string("10")));
-int BigFloat::ACCURACY = 10;
+int BigFloat::ACCURACY = 2;
 
 void BigFloat::setAccuracy(int num)
 {
@@ -560,7 +560,7 @@ BigFloat operator/=(BigFloat& num1, const BigFloat& num2) {
 	else {
 		BigFloat result;
 		result.tag = ((num1.tag && num2.tag) || (!num1.tag && !num2.tag));
-		result.exponent = num1.exponent - num2.exponent + 1;
+		result.exponent = num1.exponent - num2.exponent +1;
 		BigFloat temp1, temp2;//余数、取整除数
 		deque<int>::const_reverse_iterator iter2;
 		deque<int>::reverse_iterator iter1;
@@ -586,37 +586,15 @@ BigFloat operator/=(BigFloat& num1, const BigFloat& num2) {
 		temp2.exponent = temp2.integer.size();
 		temp1.trim();
 		bool flag = true;//提前结束循环
-		for (int i = 0; (i <= BigFloat::ACCURACY) && flag; i++) {
-			int k = 0;
+		int j = 0;//试商
+		while (iter1 != num1.integer.rend()) {
 			while ((temp1 < temp2) && (iter1 != num1.integer.rend())) {
 				temp1.integer.push_front(*iter1);
 				temp1.exponent = temp1.integer.size();
 				temp1.trim();
 				iter1++;
-				if (k != 0) {
-					result.integer.push_front(0);
-				}
-				if (i == 0)
-					result.exponent--;
-
-				k++;
 			}
-			while ((temp1 < temp2) && (iter1 == num1.integer.rend())) {
-				temp1.integer.push_front(0);;
-				temp1.exponent = temp1.integer.size();
-				temp1.trim();
-				if (temp1 == BigFloat::ZERO) {
-					flag = false;
-					break;
-				}
-				if (k != 0) {
-					result.integer.push_front(0);
-				}
-				if (i == 0)
-					result.exponent--;
-				k++;
-			}
-			int j = 0;//试商
+			j = 0;
 			while (temp1 >= temp2) {
 				BigFloat temp = temp2;
 				int k = 1;
@@ -624,14 +602,57 @@ BigFloat operator/=(BigFloat& num1, const BigFloat& num2) {
 					temp = temp * BigFloat::TEN;
 					k *= 10;//扩大倍数
 				}
+				while (temp1 >= temp) {
 					temp1 -= temp;
 					j += k;
+				}
+			}
+			result.integer.push_front(j);
+		}
+		for (int i = 0; (i <= BigFloat::ACCURACY) && flag; i++) {
+			while ((temp1 < temp2) && (iter1 == num1.integer.rend())) {
+				temp1.integer.push_front(0);
+				temp1.exponent = temp1.integer.size();
+				temp1.trim();
+				if (temp1 == BigFloat::ZERO) {
+					flag = false;
+					break;
+				}
+				if (i == 0) {
+					result.exponent--;
+				}
+			}
+			j = 0;
+			while (temp1 >= temp2) {
+				BigFloat temp = temp2;
+				int k = 1;
+				while (temp1 >= (temp * BigFloat::TEN)) {
+					temp = temp * BigFloat::TEN;
+					k *= 10;//扩大倍数
+				}
+				while (temp1 >= temp) {
+					temp1 -= temp;
+					j += k;
+				}
 				
 			}
-
 			if (!flag) break;
+			else if (i< BigFloat::ACCURACY)
 				result.integer.push_front(j);
-			
+			else {
+				if (j > (MAX_VAL/2-1)) {//四舍五入
+					deque<int>::iterator iter = result.integer.begin();
+					int to_add = 1;
+					while (iter != result.integer.end()) {
+						(*iter) = (*iter) + to_add;
+						to_add = ((*iter) > MAX_VAL-1);
+						if (to_add == 0) break;
+						(*iter) %= 10;
+						iter++;
+					}
+				}
+
+			}
 		}
 		result.trim();
 		num1 = result;

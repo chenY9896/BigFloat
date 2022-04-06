@@ -15,39 +15,49 @@ string generate(const int len, const bool sign, const bool dec,const int e) {
 		str += "0.";
 		for (int i = e; i < 0; i++) {
 			str += "0"; 
-		}	
-		for (int i = 0; i < len - e; i++) {
+		}
+		str += to_string(rand() % 10+1);
+		for (int i = 1; i < len + e; i++) {
 			str+=to_string(rand() % 10);
 		}
 
 	}
 	else {
-		for (int i = 0; i < len; i++) {
+		str += to_string(rand() % 10 + 1);
+		for (int i = 1; i < len; i++) {
 			str += to_string(rand() % 10);
 		}
 		if (dec) {
 			str.insert(e, ".");
 		}
-
 	}
-	
-	cout << str << endl;
+//	cout << str << endl;
 	return str;
 }
 
 void TEST()
 {
 	BigFloat a, b;
-	a = generate(100, 1, 1, -10);
-	b = generate(100, 1, 1, 10);
-	cout << a << endl << b << endl;
+	/*
+	double time = 0;
 	LARGE_INTEGER t1, t2, tc;
-	QueryPerformanceFrequency(&tc);
-	QueryPerformanceCounter(&t1);
-	a *= b;
-	QueryPerformanceCounter(&t2);
-	printf("Use Time:%f\n", (t2.QuadPart - t1.QuadPart)*1.0 / tc.QuadPart);
+	for (int i = 0; i < 100; i++) {
+		a = generate(100, 1, 1, 50);
+		b = generate(100, 1, 1, -50);
+	//	cout << a << endl << b << endl;
+		QueryPerformanceFrequency(&tc);
+		QueryPerformanceCounter(&t1);
+		a /= b;
+		QueryPerformanceCounter(&t2);
+		cout << "Use Time:" << (float)(t2.QuadPart - t1.QuadPart)*1.0 / tc.QuadPart << "s" << endl;
+	//	cout << a << endl;
+		time += (t2.QuadPart - t1.QuadPart)*1.0 / tc.QuadPart;
+	}
+	cout << "Average Time:" << (time / 100) << "s" << endl;
 	cout << a << endl;
+	*/
+	cin >> a >> b;
+	cout << a << " / " <<b <<  " = " << a / b << endl;
 	system("pause");
 }
 

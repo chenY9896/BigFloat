@@ -42,7 +42,7 @@ public:
 	BigFloat(const int&);
 	BigFloat(const BigFloat&);
 	~BigFloat();
-	void setAccuracy(int);//设置除法精度
+	static void setAccuracy(int);//设置除法精度
 	string toString();// 字符串格式化输出
 	static const BigFloat ZERO;
 	static const BigFloat ONE;

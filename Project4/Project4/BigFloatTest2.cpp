@@ -37,13 +37,14 @@ string generate(const int len, const bool sign, const bool dec,const int e) {
 
 void TEST()
 {
-	BigFloat a, b;
 	/*
+	BigFloat a, b;
+	BigFloat::setAccuracy(10);
 	double time = 0;
 	LARGE_INTEGER t1, t2, tc;
-	for (int i = 0; i < 100; i++) {
-		a = generate(100, 1, 1, 50);
-		b = generate(100, 1, 1, -50);
+	for (int i = 0; i < 10; i++) {
+		a = generate(1000, 1, 1, 500);
+		b = generate(1000, 1, 1, 500);
 	//	cout << a << endl << b << endl;
 		QueryPerformanceFrequency(&tc);
 		QueryPerformanceCounter(&t1);
@@ -53,11 +54,9 @@ void TEST()
 	//	cout << a << endl;
 		time += (t2.QuadPart - t1.QuadPart)*1.0 / tc.QuadPart;
 	}
-	cout << "Average Time:" << (time / 100) << "s" << endl;
-	cout << a << endl;
+	cout << "Average Time:" << (time / 10) << "s" << endl;
 	*/
-	cin >> a >> b;
-	cout << a << " / " <<b <<  " = " << a / b << endl;
+	cout << BigFloat("123412341234123412341234123412341289430984095.8328452930854923984721374109578034") / BigFloat("120934789347523984502394852389459832.348983043051234") << endl;
 	system("pause");
 }
 

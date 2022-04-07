@@ -15,7 +15,7 @@ BigFloat::BigFloat(const BigFloat &num)
 	e = num.e;
 	s = num.s;
 }
-/*
+/*需重写
 BigFloat::BigFloat(int num){
 	if (num >= 0)
 		s = true;
@@ -288,9 +288,76 @@ BigFloat operator+(BigFloat& num1, BigFloat num2)
 			return num1 = num2 - (-num1);
 	}
 }
-
-
 BigFloat operator-(BigFloat& num1, BigFloat num2) {
+	if (num1.s == num2.s) { 
+		if (num1.s) {
+			if (num1 < num2){
+				BigFloat num(num2 - num1);
+				num1 = -num2;
+				return num1;
+			}
+		}
+		else {
+			if (-num1 > -num2)
+				return num1 = -((-num1) - (-num2));
+			else
+				return num1 = (-num2) - (-num1);
+		}
 
+		int to_sub = 0;
+		if (num1.e != num2.e) {
+			if (num1.e > num2.e) {
+				for (int i = 0; i < num1.e - num2.e; i++)	//添0对齐
+					num2.m.push_back(0);
+				num2.e = num1.e;
+			}
+			else {
+				for (int i = 0; i < num2.e - num1.e; i++)	//添0对齐
+					num1.m.push_back(0);
+				num1.e = num2.e;
+			}
+		}
+	vector<int>::reverse_iterator iter1,iter2;
+	iter1 = num1.m.rbegin();
+	iter2 = num2.m.rbegin();
+	while (iter1 != num1.m.rend() && iter2 != num2.m.rend()) {
+		(*iter1) = (*iter1) - (*iter2) - to_sub;
+		to_sub = 0;
+		if ((*iter1) < 0) {
+			to_sub = 1;
+			(*iter1) += 10;
+		}
+		iter1++;
+		iter2++;
+	}
+	while (iter1 != num1.m.rend()) {
+		(*iter1) = (*iter1) - to_sub;
+		to_sub = 0;
+		if ((*iter1) < 0) {
+			to_sub = 1;
+			(*iter1) += 10;
+		}
+		else break;
+		iter1++;
+	}
+	vector<int>::iterator iter = num1.m.begin();
+	while (!num1.m.empty() && (*iter) == 0) {
+		num1.m.erase(iter);
+		iter = num1.m.begin();
+	}
+	if (num1.m.size() == 0) {
+		num1.s = true;
+		num1.m.insert(num1.m.begin(), 0);
+	}
+	
+	return num1;
+}
+	else {
+		string zero = "0";
+		if (num1 > BigFloat(zero))
+			return num1 =num1+ (-num2);
+		else
+			return num1 = -(num2 + (-num1));
+}
 	return num1;
 }

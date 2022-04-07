@@ -20,6 +20,7 @@ int main() {
 	else cout << "A < B " << endl;
 
 	cout << "A + B = " << A + B << endl;
+	cout << "A - B = " << A - B << endl;
 
 
 	/*

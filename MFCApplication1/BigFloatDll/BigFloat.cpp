@@ -582,7 +582,7 @@ BigFloat operator/=(BigFloat& num1, const BigFloat& num2) {
 		temp2.exponent = temp2.integer.size();
 		temp1.trim();
 		bool flag = true;//提前结束循环
-		int j = 0;//试商
+		int j = 0;//商
 		while (iter1 != num1.integer.rend()) {
 			while ((temp1 < temp2) && (iter1 != num1.integer.rend())) {
 				temp1.integer.push_front(*iter1);
@@ -614,7 +614,7 @@ BigFloat operator/=(BigFloat& num1, const BigFloat& num2) {
 					flag = false;
 					break;
 				}
-				if (i == 0) {
+				if (i == 0 && num1<num2) {
 					result.exponent--;
 				}
 			}

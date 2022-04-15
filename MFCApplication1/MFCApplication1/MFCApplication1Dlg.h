@@ -14,7 +14,7 @@ class CMFCApplication1Dlg : public CDialogEx
 public:
 	CMFCApplication1Dlg(CWnd* pParent = NULL);	// 标准构造函数
 	BigFloat result; BigFloat num1; BigFloat num2;
-	string str1, str2, str;
+	string str1, str;
 	bool tag, flag;
 
 
@@ -38,6 +38,7 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
+	CMenu m_menu;
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton3();
@@ -59,4 +60,7 @@ public:
 	afx_msg void OnBnClickedButton15();
 	afx_msg void OnBnClickedButton16();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+
+	CString Cstr;
+	CString Cstr1;
 };

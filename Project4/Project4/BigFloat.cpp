@@ -1,6 +1,7 @@
 #include "BigFloat.h"
 #include <iostream>
 #include <string>
+#include<sstream>
 #include<limits.h>
 using namespace std;
 
@@ -8,7 +9,7 @@ using namespace std;
 const BigFloat BigFloat::ZERO = BigFloat((string("0")));
 const BigFloat BigFloat::ONE = BigFloat((string("1")));
 const BigFloat BigFloat::TEN = BigFloat((string("10")));
-int BigFloat::ACCURACY = 2;
+int BigFloat::ACCURACY = 3;
 
 void BigFloat::setAccuracy(int num)
 {
@@ -48,6 +49,9 @@ void BigFloat::trim() {
 
 BigFloat::BigFloat()
 {
+	tag = true;
+	integer.push_back(0);
+	exponent = 1;
 }
 // 字符串构造
 // str：十进制字符串
@@ -134,14 +138,24 @@ BigFloat::BigFloat(const string & str1)
 BigFloat::BigFloat(const int & num1)
 {
 	int num = num1;
+	int e = 0;
 	if (num >= 0)
 		tag = true;
 	else {
 		tag = false;
 		num *= (-1);
 	}
+	if (num >= MAX_VAL) {
+		while (num >= MAX_VAL) {
+			integer.push_back(num%MAX_VAL);
+			e++;
+			num /= MAX_VAL;
+		}
+	}
 		integer.push_back(num);
-	exponent = 1;
+		e++;
+	
+	exponent = e;
 	
 }
 
@@ -215,7 +229,7 @@ string BigFloat::toString()
 			}
 			str+= to_string(*iter);
 		}
-		string::size_type idx = str.find(".");
+		string::size_type idx = str.find(".");//小数部分去零
 		int j = 0; bool tag = false;
 		if (idx != string::npos) {
 			for (string::reverse_iterator iter = str.rbegin(); iter != str.rend(); iter++) {
@@ -560,7 +574,8 @@ BigFloat operator/=(BigFloat& num1, const BigFloat& num2) {
 	else {
 		BigFloat result;
 		result.tag = ((num1.tag && num2.tag) || (!num1.tag && !num2.tag));
-		result.exponent = num1.exponent - num2.exponent +1;
+		result.exponent = num1.exponent - num2.exponent;
+		result.integer.pop_back();
 		BigFloat temp1, temp2;//余数、取整除数
 		deque<int>::const_reverse_iterator iter2;
 		deque<int>::reverse_iterator iter1;
@@ -618,9 +633,9 @@ BigFloat operator/=(BigFloat& num1, const BigFloat& num2) {
 					flag = false;
 					break;
 				}
-				if (i == 0 && (num1<num2)) {
-					result.exponent--;
-				}
+			}
+			if (i == 0 && num1 > num2 && (num1.tag&&num2.tag)) {
+				result.exponent++;
 			}
 			j = 0;
 			while (temp1 >= temp2) {

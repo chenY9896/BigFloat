@@ -58,6 +58,8 @@ END_MESSAGE_MAP()
 
 CMFCApplication1Dlg::CMFCApplication1Dlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_MFCAPPLICATION1_DIALOG, pParent)
+	, Cstr(_T(""))
+	, Cstr1(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -65,6 +67,8 @@ CMFCApplication1Dlg::CMFCApplication1Dlg(CWnd* pParent /*=NULL*/)
 void CMFCApplication1Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT1, Cstr);
+	DDX_Text(pDX, IDC_EDIT2, Cstr1);
 }
 
 BEGIN_MESSAGE_MAP(CMFCApplication1Dlg, CDialogEx)
@@ -126,11 +130,12 @@ BOOL CMFCApplication1Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	m_menu.LoadMenuW(IDR_MENU1); 
+	SetMenu(&m_menu); //将菜单加入到对话框。
 	result = 0;
 	num1 = 0;
 	num2 = 0;
 	str1 = "0";
-	str2 = "0";
 	str = "0";
 
 	tag = true;
@@ -192,24 +197,24 @@ HCURSOR CMFCApplication1Dlg::OnQueryDragIcon()
 void CMFCApplication1Dlg::OnBnClickedButton1()
 {// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	if (str2 == "0")
-		str2 = "1";
+	if (str == "0")
+		str = "1";
 	else
-		str2 += "1";
-	CString cstr ( str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str += "1";
+	Cstr =str.c_str();
+	UpdateData(false);
 }
 
 void CMFCApplication1Dlg::OnBnClickedButton2()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	if (str2 == "0")
-		str2 = "2";
+	if (str == "0")
+		str = "2";
 	else
-		str2 += "2";
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str += "2";
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
@@ -217,12 +222,12 @@ void CMFCApplication1Dlg::OnBnClickedButton3()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	if (str2 == "0")
-		str2 = "3";
+	if (str == "0")
+		str = "3";
 	else
-		str2 += "3";
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str += "3";
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
@@ -230,12 +235,12 @@ void CMFCApplication1Dlg::OnBnClickedButton4()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	if (str2 == "0")
-		str2 = "4";
+	if (str == "0")
+		str = "4";
 	else
-		str2 += "4";
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str += "4";
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
@@ -243,12 +248,12 @@ void CMFCApplication1Dlg::OnBnClickedButton5()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	if (str2 == "0")
-		str2 = "5";
+	if (str == "0")
+		str = "5";
 	else
-		str2 += "5";
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str += "5";
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
@@ -256,12 +261,12 @@ void CMFCApplication1Dlg::OnBnClickedButton6()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	if (str2 == "0")
-		str2 = "6";
+	if (str == "0")
+		str = "6";
 	else
-		str2 += "6";
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str += "6";
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
@@ -269,12 +274,12 @@ void CMFCApplication1Dlg::OnBnClickedButton7()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	if (str2 == "0")
-		str2 = "7";
+	if (str == "0")
+		str = "7";
 	else
-		str2 += "7";
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str += "7";
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
@@ -283,12 +288,12 @@ void CMFCApplication1Dlg::OnBnClickedButton8()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	if (str2 == "0")
-		str2 = "8";
+	if (str == "0")
+		str = "8";
 	else
-		str2 += "8";
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str += "8";
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
@@ -296,12 +301,12 @@ void CMFCApplication1Dlg::OnBnClickedButton9()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	if (str2 == "0")
-		str2 = "9";
+	if (str == "0")
+		str = "9";
 	else
-		str2 += "9";
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str += "9";
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
@@ -309,12 +314,12 @@ void CMFCApplication1Dlg::OnBnClickedButton0()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	if (str2 == "0")
-		str2 = "0";
+	if (str == "0")
+		str = "0";
 	else
-		str2 += "0";
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str += "0";
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
@@ -322,11 +327,11 @@ void CMFCApplication1Dlg::OnBnClickedButton10()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	string::size_type idx = str2.find(".");
+	string::size_type idx = str.find(".");
 	if (idx == string::npos)
-		str2 += ".";
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str += ".";
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
@@ -334,9 +339,9 @@ void CMFCApplication1Dlg::OnBnClickedButton17()//CE
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	str2 = "0";
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+	str = "0";
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
@@ -345,12 +350,11 @@ void CMFCApplication1Dlg::OnBnClickedButton18()//C
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
 	str1 = "0";
-	str2 = "0";
 	str = "0";
 	tag = true;
 	result = 0;
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+	Cstr = str.c_str();
+	UpdateData(false);
 	GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
 }
 
@@ -359,25 +363,24 @@ void CMFCApplication1Dlg::OnBnClickedButton19()//←
 {
 	// TODO: 在此添加控件通知处理程序代码
 	flag = true;
-	if (str2.length() == 1)
-		str2 = "0";
+	if (str.length() == 1)
+		str = "0";
 	else
-		str2.pop_back();
-	CString cstr(str2.c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		str.pop_back();
+	Cstr = str.c_str();
+	UpdateData(false);
 }
 
 
 void CMFCApplication1Dlg::OnBnClickedButton11()//+/-
 {
 	// TODO: 在此添加控件通知处理程序代码
-		CString cstr;
-		GetDlgItem(IDC_EDIT1)->GetWindowTextW(cstr);
-		str2 = CW2A(cstr.GetString());
-		num2 = str2;
-		str2 = (-num2).toString();
-		cstr=str2.c_str();
-		GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+		UpdateData(true);
+		str = CW2A(Cstr.GetString());
+		num2 = str;
+		str = (-num2).toString();
+		Cstr=str.c_str();
+		UpdateData(false);
 		
 }
 
@@ -386,52 +389,45 @@ void CMFCApplication1Dlg::OnBnClickedButton12()//+
 {
 	// TODO: 在此添加控件通知处理程序代码
 	if (tag) {
-		CString cstr;
-		GetDlgItem(IDC_EDIT1)->GetWindowTextW(cstr);
-		str2 = CW2A(cstr.GetString());
+		UpdateData(true);
+		str = CW2A(Cstr.GetString());
 		tag = false;
-		result = str2;
-		str2 = "0";
-		str = result.toString() + "+";
-		CString cstr1(str2.c_str());
-		GetDlgItem(IDC_EDIT1)->SetWindowText(cstr1);
+		result = str;
 	}
 	else {
-		CString cstr;
-		GetDlgItem(IDC_EDIT1)->GetWindowTextW(cstr);
-		str2 = CW2A(cstr.GetString());
-		if (str.find("+") != string::npos)
-			result += str2;
-		else if (str.find("×") != string::npos)
-			result *= str2;
-		else if (str.find("÷") != string::npos) {
+		UpdateData(true);
+		str = CW2A(Cstr.GetString());
+		if (str1.find("+") != string::npos)
+			result += str;
+		else if (str1.find("×") != string::npos)
+			result *= str;
+		else if (str1.find("÷") != string::npos) {
 			try {
-				result /= str2;
+				result /= str;
 			}
 			catch (ZeroException e) {
-				cstr = e.errorText().c_str();
-				AfxMessageBox(cstr);
+				Cstr = e.errorText().c_str();
+				AfxMessageBox(Cstr);
 				flag = true;
 				str1 = "0";
-				str2 = "0";
 				str = "0";
 				tag = true;
 				result = 0;
-				CString cstr(str2.c_str());
-				GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+				Cstr = str.c_str();
+				UpdateData(false);
 				GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
 			}
 		}
-		else if (str.find("-") != string::npos)
-			result -= str2;
-		str2 = "0";
-		str = result.toString() + "+";
-		CString cstr1(result.toString().c_str());
-		GetDlgItem(IDC_EDIT1)->SetWindowText(cstr1);
+		else if (str1.find("-") != string::npos)
+			result -= str;
+		
 	}	
-	CString cstr(str.c_str());
-	GetDlgItem(IDC_EDIT2)->SetWindowText(cstr);
-
+	str = result.toString();
+	str1 = result.toString() + "+";
+	Cstr = str.c_str();
+	Cstr1 = str1.c_str();
+	UpdateData(false);
+	str = "0";
 }
 
 
@@ -439,53 +435,44 @@ void CMFCApplication1Dlg::OnBnClickedButton13()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	if (tag) {
-		CString cstr;
-		GetDlgItem(IDC_EDIT1)->GetWindowTextW(cstr);
-		str2 = CW2A(cstr.GetString());
+		UpdateData(true);
+		str = CW2A(Cstr.GetString());
 		tag = false;
-		result = str2;
-		str2 = "0";
-		str = result.toString() + "-";
-		CString cstr1(str2.c_str());
-		GetDlgItem(IDC_EDIT1)->SetWindowText(cstr1);
+		result = str;
 	}
 	else {
-		CString cstr;
-		GetDlgItem(IDC_EDIT1)->GetWindowTextW(cstr);
-		str2 = CW2A(cstr.GetString());
-		if (str.find("+") != string::npos)
-			result += str2;		
-		else if (str.find("×") != string::npos)
-			result *= str2;
-		else if (str.find("÷") != string::npos) {
+		UpdateData(true);
+		str = CW2A(Cstr.GetString());
+		if (str1.find("+") != string::npos)
+			result += str;
+		else if (str1.find("×") != string::npos)
+			result *= str;
+		else if (str1.find("÷") != string::npos) {
 			try {
-				result /= str2;
+				result /= str;
 			}
 			catch (ZeroException e) {
-				cstr = e.errorText().c_str();
-				AfxMessageBox(cstr);
+				Cstr = e.errorText().c_str();
+				AfxMessageBox(Cstr);
 				flag = true;
 				str1 = "0";
-				str2 = "0";
 				str = "0";
 				tag = true;
 				result = 0;
-				CString cstr(str2.c_str());
-				GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+				Cstr = str.c_str();
+				UpdateData(false);
 				GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
 			}
 		}
-		else if (str.find("-") != string::npos)
-			result -= str2;
-		str2 = "0";
-		str = result.toString() + "-";
-		CString cstr1(result.toString().c_str());
-		GetDlgItem(IDC_EDIT1)->SetWindowText(cstr1);
+		else if (str1.find("-") != string::npos)
+			result -= str;
 	}
-	
-	CString cstr(str.c_str());
-	GetDlgItem(IDC_EDIT2)->SetWindowText(cstr);
-
+	str = result.toString();
+	str1 = result.toString() + "-";
+	Cstr = str.c_str();
+	Cstr1 = str1.c_str();
+	UpdateData(false);
+	str = "0";
 }
 
 
@@ -493,52 +480,44 @@ void CMFCApplication1Dlg::OnBnClickedButton14()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	if (tag) {
-		CString cstr;
-		GetDlgItem(IDC_EDIT1)->GetWindowTextW(cstr);
-		str2 = CW2A(cstr.GetString());
+		UpdateData(true);
+		str = CW2A(Cstr.GetString());
 		tag = false;
-		result = str2;
-		str2 = "0";
-		str = result.toString() + "×";
-		CString cstr1(str2.c_str());
-		GetDlgItem(IDC_EDIT1)->SetWindowText(cstr1);
+		result = str;
 	}
 	else {
-		CString cstr;
-		GetDlgItem(IDC_EDIT1)->GetWindowTextW(cstr);
-		str2 = CW2A(cstr.GetString());
-		if (str.find("+") != string::npos)
-			result += str2;
-		else if (str.find("×") != string::npos)
-			result *= str2;
-		else if (str.find("÷") != string::npos) {
+		UpdateData(true);
+		str = CW2A(Cstr.GetString());
+		if (str1.find("+") != string::npos)
+			result += str;
+		else if (str1.find("×") != string::npos)
+			result *= str;
+		else if (str1.find("÷") != string::npos) {
 			try {
-				result /= str2;
+				result /= str;
 			}
 			catch (ZeroException e) {
-				cstr = e.errorText().c_str();
-				AfxMessageBox(cstr);
+				Cstr = e.errorText().c_str();
+				AfxMessageBox(Cstr);
 				flag = true;
 				str1 = "0";
-				str2 = "0";
 				str = "0";
 				tag = true;
 				result = 0;
-				CString cstr(str2.c_str());
-				GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+				Cstr = str.c_str();
+				UpdateData(false);
 				GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
 			}
 		}
-		else if (str.find("-") != string::npos)
-			result -= str2;
-		str2 = "0";
-		str = result.toString() + "×";
-		CString cstr1(result.toString().c_str());
-		GetDlgItem(IDC_EDIT1)->SetWindowText(cstr1);
-	}	
-	CString cstr(str.c_str());
-	GetDlgItem(IDC_EDIT2)->SetWindowText(cstr);
-
+		else if (str1.find("-") != string::npos)
+			result -= str;
+	}
+	str = result.toString();
+	str1 = result.toString() + "×";
+	Cstr = str.c_str();
+	Cstr1 = str1.c_str();
+	UpdateData(false);
+	str = "0";
 }
 
 
@@ -546,96 +525,83 @@ void CMFCApplication1Dlg::OnBnClickedButton15()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	if (tag) {
-		CString cstr;
-		GetDlgItem(IDC_EDIT1)->GetWindowTextW(cstr);
-		str2 = CW2A(cstr.GetString());
+		UpdateData(true);
+		str = CW2A(Cstr.GetString());
 		tag = false;
-		result = str2;
-		str2 = "0";
-		str = result.toString() + "÷";
-		CString cstr1(str2.c_str());
-		GetDlgItem(IDC_EDIT1)->SetWindowText(cstr1);
+		result = str;
 	}
 	else {
-		CString cstr;
-		GetDlgItem(IDC_EDIT1)->GetWindowTextW(cstr);
-		str2 = CW2A(cstr.GetString());
-		if (str.find("+") != string::npos)
-			result += str2;
-		else if (str.find("×") != string::npos)
-			result *= str2;
-		else if (str.find("÷") != string::npos) {
+		UpdateData(true);
+		str = CW2A(Cstr.GetString());
+		if (str1.find("+") != string::npos)
+			result += str;
+		else if (str1.find("×") != string::npos)
+			result *= str;
+		else if (str1.find("÷") != string::npos) {
 			try {
-				result /= str2;
+				result /= str;
 			}
 			catch (ZeroException e) {
-				cstr = e.errorText().c_str();
-				AfxMessageBox(cstr);
+				Cstr = e.errorText().c_str();
+				AfxMessageBox(Cstr);
 				flag = true;
 				str1 = "0";
-				str2 = "0";
 				str = "0";
 				tag = true;
 				result = 0;
-				CString cstr(str2.c_str());
-				GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+				Cstr = str.c_str();
+				UpdateData(false);
 				GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
 			}
 		}
-		else if (str.find("-") != string::npos)
-			result -= str2;
-		str2 = "0";
-		str = result.toString() + "÷";
-		CString cstr1(result.toString().c_str());
-		GetDlgItem(IDC_EDIT1)->SetWindowText(cstr1);
+		else if (str1.find("-") != string::npos)
+			result -= str;
 	}
-
-	CString cstr(str.c_str());
-	GetDlgItem(IDC_EDIT2)->SetWindowText(cstr);
-
+	str = result.toString();
+	str1 = result.toString() + "÷";
+	Cstr = str.c_str();
+	Cstr1 = str1.c_str();
+	UpdateData(false);
+	str = "0";
 }
 
 
 void CMFCApplication1Dlg::OnBnClickedButton16()//=
 {
 	// TODO: 在此添加控件通知处理程序代码
-	CString cstr;
-	GetDlgItem(IDC_EDIT1)->GetWindowTextW(cstr);
-	str2 = CW2A(cstr.GetString());
-	str = str + str2 +"=";
-	if (str.find("+") != string::npos)
-		result += str2;	
-	else if (str.find("×") != string::npos)
-		result *= str2;
-	else if (str.find("÷") != string::npos) {
+	UpdateData(true);
+	str = CW2A(Cstr.GetString());
+	str1 = str1 + str +"=";
+	if (str1.find("+") != string::npos)
+		result += str;	
+	else if (str1.find("×") != string::npos)
+		result *= str;
+	else if (str1.find("÷") != string::npos) {
 		try {
-			result /= str2;
+			result /= str;
 		}
 		catch (ZeroException e) {
-			cstr = e.errorText().c_str();
-			AfxMessageBox(cstr);
+			Cstr = e.errorText().c_str();
+			AfxMessageBox(Cstr);
 			flag = true;
 			str1 = "0";
-			str2 = "0";
 			str = "0";
 			tag = true;
 			result = 0;
-			CString cstr(str2.c_str());
-			GetDlgItem(IDC_EDIT1)->SetWindowText(cstr);
+			Cstr = str.c_str();
+			UpdateData(false);
 			GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
 		}
 		
 	}
 		
-	else if (str.find("-") != string::npos)
-		result -= str2;
-	str2 = "0";
-	CString cstr1(result.toString().c_str());
-	GetDlgItem(IDC_EDIT1)->SetWindowText(cstr1);
-	CString cstr2(str.c_str());
-	GetDlgItem(IDC_EDIT2)->SetWindowText(cstr2);
+	else if (str1.find("-") != string::npos)
+		result -= str;
 	str = result.toString();
-	flag = false;
+	Cstr = str.c_str();
+	Cstr1 = str1.c_str();
+	UpdateData(false);
+	str = "0";
 }
 
 

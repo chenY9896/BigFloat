@@ -3,6 +3,7 @@
 //
 #include "BigFloat.h"
 #include<string>
+#include "afxwin.h"
 using namespace std;
 #pragma once
 
@@ -15,8 +16,11 @@ public:
 	CMFCApplication1Dlg(CWnd* pParent = NULL);	// 标准构造函数
 	BigFloat result; BigFloat num1; BigFloat num2;
 	string str1, str;
-	bool tag, flag;
-
+	string tag;
+	bool the_one, flag;
+	bool putin;
+	
+	CFont m_Font;
 
 // 对话框数据
 #ifdef AFX_DESIGN_TIME
@@ -63,4 +67,7 @@ public:
 
 	CString Cstr;
 	CString Cstr1;
+	afx_msg void OnEnChangeEdit1();
+	CEdit m_edit;
+	afx_msg void OnAccuracy();
 };

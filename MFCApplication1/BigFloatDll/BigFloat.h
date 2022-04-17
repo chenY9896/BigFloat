@@ -7,23 +7,60 @@ using namespace std;
 
 #define MAX_VAL 1000000000 // 基数
 #define VAL_LEN 9
-
-class DLL_API ZeroException {
+class DLL_API BigFloatException {
 public:
-	void error() { cout << "除数不能为0!" << endl; }
-	string errorText() { return "除数不能为0!"; }
+	BigFloatException(string str = "", int i = 0) :errmsg(str), id(i) {
+	}
+	virtual void err()const = 0;//打印出错信息
+	virtual string err_msg()const = 0;//返回出错信息
+	virtual int err_id()const = 0;//返回出错代码
+protected:
+	string errmsg;
+	int id;
 };
 
-class DLL_API IllegalStrException {
+class DLL_API ZeroException :public BigFloatException {
 public:
-	void error() { cout << "输入不合法!" << endl; }
-	string errorText() { return "输入不合法!"; }
+	ZeroException(string str = "除数不能为0！", int id = 1) :BigFloatException(str, id) {
+	}
+	virtual void err()const {
+		cout << "错误信息：" << errmsg << endl;
+	}
+	virtual string err_msg()const {
+		return errmsg;
+	}
+	virtual int err_id()const {
+		return id;
+	}
 };
 
-class DLL_API OverFlowException {
+class DLL_API IllegalStrException :public BigFloatException {
 public:
-	void error() { cout << "指数溢出!" << endl; }
-	string errorText() { return "指数溢出!"; }
+	IllegalStrException(string str = "输入不合法!", int id = 2) :BigFloatException(str, id) {
+	}
+	virtual void err()const {
+		cout << "错误信息：" << errmsg << endl;
+	}
+	virtual string err_msg()const {
+		return errmsg;
+	}
+	virtual int err_id()const {
+		return id;
+	}
+};
+class DLL_API ExponentOverFlowException :public BigFloatException {
+public:
+	ExponentOverFlowException(string str = "指数溢出!", int id = 3) :BigFloatException(str, id) {
+	}
+	virtual void err()const {
+		cout << "错误信息：" << errmsg << endl;
+	}
+	virtual string err_msg()const {
+		return errmsg;
+	}
+	virtual int err_id()const {
+		return id;
+	}
 };
 
 class DLL_API BigFloat
@@ -38,11 +75,12 @@ private:
 	
 public:
 	BigFloat();//构造
-	BigFloat(const string&);
+	BigFloat(const string&) noexcept(false);
 	BigFloat(const int&);
 	BigFloat(const BigFloat&);
 	~BigFloat();
-	void setAccuracy(int);//设置除法精度
+	static void setAccuracy(int);//设置除法精度
+	static int getAccuracy();
 	string toString();// 字符串格式化输出
 	BigFloat operator=(const BigFloat&);//赋值
 	friend BigFloat DLL_API operator-(const BigFloat&);//相反数
@@ -60,11 +98,11 @@ public:
 	// 四则运算符重载
 	friend BigFloat DLL_API operator+(const BigFloat&, const BigFloat&);
 	friend BigFloat DLL_API operator-(const BigFloat&, const BigFloat&);
-	friend BigFloat DLL_API operator*(const BigFloat&, const BigFloat&);
-	friend BigFloat DLL_API operator/(const BigFloat&, const BigFloat&) throw(ZeroException);
+	friend BigFloat DLL_API operator*(const BigFloat&, const BigFloat&) noexcept(false);
+	friend BigFloat DLL_API operator/(const BigFloat&, const BigFloat&) noexcept(false);
 	friend BigFloat DLL_API operator+=(BigFloat&, const BigFloat&);
 	friend BigFloat DLL_API operator-=(BigFloat&, const BigFloat&);
-	friend BigFloat DLL_API operator*=(BigFloat&, const BigFloat&);
-	friend BigFloat DLL_API operator/=(BigFloat&, const BigFloat&) throw(ZeroException);
+	friend BigFloat DLL_API operator*=(BigFloat&, const BigFloat&) noexcept(false);
+	friend BigFloat DLL_API operator/=(BigFloat&, const BigFloat&) noexcept(false);
 };
 

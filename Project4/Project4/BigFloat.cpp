@@ -1,19 +1,18 @@
 #include "BigFloat.h"
 #include <iostream>
 #include <string>
-#include<sstream>
 #include<limits.h>
 using namespace std;
 
-
-const BigFloat BigFloat::ZERO = BigFloat((string("0")));
-const BigFloat BigFloat::ONE = BigFloat((string("1")));
-const BigFloat BigFloat::TEN = BigFloat((string("10")));
-int BigFloat::ACCURACY = 3;
+int BigFloat::ACCURACY = 5;
 
 void BigFloat::setAccuracy(int num)
 {
 	ACCURACY = num;
+}
+int BigFloat::getAccuracy()
+{
+	return ACCURACY;
 }
 //字符串合法性检查，只允许出现字符 0~9、负号和小数点
 bool BigFloat::checkStr(const string & str)
@@ -467,28 +466,7 @@ BigFloat operator-=(BigFloat& num1, const BigFloat& num2) {
 				iter1++;
 			}
 			iter2 = num2.integer.begin();
-			while (iter1 != num1.integer.end() && iter2 != num2.integer.end()) {
-				(*iter1) = (*iter1) - (*iter2) - to_sub;
-				to_sub = 0;
-				if ((*iter1) < 0) {
-					to_sub = 1;
-					(*iter1) += MAX_VAL;
-				}
-				iter1++;
-				iter2++;
-			}
-			while (iter1 != num1.integer.end()) {
-				(*iter1) = (*iter1) - to_sub;
-				to_sub = 0;
-				if ((*iter1) < 0) {
-					to_sub = 1;
-					(*iter1) += MAX_VAL;
-				}
-				else break;
-				iter1++;
-			}
-			num1.trim();
-			return num1;
+			
 		}
 		else {
 			for (int i = b - a; i > 0; i--) {
@@ -496,29 +474,29 @@ BigFloat operator-=(BigFloat& num1, const BigFloat& num2) {
 			}
 			iter1 = num1.integer.begin();
 			iter2 = num2.integer.begin();
-			while (iter1 != num1.integer.end() && iter2 != num2.integer.end()) {
-				(*iter1) = (*iter1) - (*iter2) - to_sub;
-				to_sub = 0;
-				if ((*iter1) < 0) {
-					to_sub = 1;
-					(*iter1) += MAX_VAL;
-				}
-				iter1++;
-				iter2++;
-			}
-			while (iter1 != num1.integer.end()) {
-				(*iter1) = (*iter1) - to_sub;
-				to_sub = 0;
-				if ((*iter1) < 0) {
-					to_sub = 1;
-					(*iter1) += MAX_VAL;
-				}
-				else break;
-				iter1++;
-			}
-			num1.trim();
-			return num1;
 		}
+		while (iter1 != num1.integer.end() && iter2 != num2.integer.end()) {
+			(*iter1) = (*iter1) - (*iter2) - to_sub;
+			to_sub = 0;
+			if ((*iter1) < 0) {
+				to_sub = 1;
+				(*iter1) += MAX_VAL;
+			}
+			iter1++;
+			iter2++;
+		}
+		while (iter1 != num1.integer.end()) {
+			(*iter1) = (*iter1) - to_sub;
+			to_sub = 0;
+			if ((*iter1) < 0) {
+				to_sub = 1;
+				(*iter1) += MAX_VAL;
+			}
+			else break;
+			iter1++;
+		}
+		num1.trim();
+		return num1;
 	}
 	else {
 		if (num1.tag)
@@ -531,13 +509,17 @@ BigFloat operator-=(BigFloat& num1, const BigFloat& num2) {
 
 BigFloat operator*=(BigFloat& num1, const BigFloat& num2) {//手工
 	BigFloat result;
-	if (num1 == BigFloat::ZERO || num2 == BigFloat::ZERO)
-		result = BigFloat::ZERO;
+	if (num1 == 0 || num2 == 0)
+		result = 0;
 	else {
 		int i = 0;	
 		deque<int>::iterator iter;
 		long long temp;
 		result.tag = ((num1.tag && num2.tag) || (!num1.tag && !num2.tag));
+		if (num1.exponent > 0 && num2.exponent > 0 && num1.exponent > INT_MAX - num2.exponent)
+			throw ExponentOverFlowException();
+		else if (num1.exponent < 0 && num2.exponent < 0 && num1.exponent < INT_MIN - num2.exponent)
+			throw ExponentOverFlowException();
 		result.exponent = num1.exponent + num2.exponent;
 		result.integer.resize(num1.integer.size() + num2.integer.size());//两个数相乘，结果的位数不会超过它们的位数之和。
 		for (deque<int>::const_iterator iter2 = num2.integer.begin(); iter2 != num2.integer.end(); iter2++) {
@@ -567,13 +549,17 @@ BigFloat operator*=(BigFloat& num1, const BigFloat& num2) {//手工
 
 
 BigFloat operator/=(BigFloat& num1, const BigFloat& num2) {
-	if (num2 == BigFloat::ZERO)
+	if (num2 == 0)
 		throw ZeroException();
-	if (num1 == BigFloat::ZERO)
+	if (num1 == 0)
 		return num1;
 	else {
 		BigFloat result;
 		result.tag = ((num1.tag && num2.tag) || (!num1.tag && !num2.tag));
+		if (num1.exponent > 0 && num2.exponent < 0 && num1.exponent > INT_MAX + num2.exponent)
+			throw ExponentOverFlowException();
+		else if (num1.exponent < 0 && num2.exponent > 0 && num1.exponent < INT_MIN + num2.exponent)
+			throw ExponentOverFlowException();
 		result.exponent = num1.exponent - num2.exponent;
 		result.integer.pop_back();
 		BigFloat temp1, temp2;//余数、取整除数
@@ -595,6 +581,10 @@ BigFloat operator/=(BigFloat& num1, const BigFloat& num2) {
 			while (num2.integer.size() > temp1.integer.size())
 				temp1.integer.push_front(0);//补0
 		}
+
+		if ( num1 > num2 && (num1.tag&&num2.tag) && (num1.exponent==num2.exponent)) {
+			result.exponent++;
+		}
 		temp1.tag = true;
 		temp1.exponent = temp1.integer.size();
 		temp2.tag = true;
@@ -602,47 +592,31 @@ BigFloat operator/=(BigFloat& num1, const BigFloat& num2) {
 		temp1.trim();
 		bool flag = true;//提前结束循环
 		int j = 0;//商
-		while (iter1 != num1.integer.rend()) {
+		int m = BigFloat::ACCURACY;
+		if (result.exponent < 0)
+			m = BigFloat::ACCURACY + result.exponent-1;
+		for (int i = 0; (i <= m) && flag; i++) {
 			while ((temp1 < temp2) && (iter1 != num1.integer.rend())) {
 				temp1.integer.push_front(*iter1);
 				temp1.exponent = temp1.integer.size();
 				temp1.trim();
 				iter1++;
 			}
-			j = 0;
-			while (temp1 >= temp2) {
-				BigFloat temp = temp2;
-				int k = 1;
-				while (temp1 >= (temp * BigFloat::TEN)) {
-					temp = temp * BigFloat::TEN;
-					k *= 10;//扩大倍数
-				}
-				while (temp1 >= temp) {
-					temp1 -= temp;
-					j += k;
-				}
-			}
-			result.integer.push_front(j);
-		}
-		for (int i = 0; (i <= BigFloat::ACCURACY) && flag; i++) {
 			while ((temp1 < temp2) && (iter1 == num1.integer.rend())) {
 				temp1.integer.push_front(0);
 				temp1.exponent = temp1.integer.size();
 				temp1.trim();
-				if (temp1 == BigFloat::ZERO) {
+				if (temp1 == 0) {
 					flag = false;
 					break;
 				}
-			}
-			if (i == 0 && num1 > num2 && (num1.tag&&num2.tag)) {
-				result.exponent++;
 			}
 			j = 0;
 			while (temp1 >= temp2) {
 				BigFloat temp = temp2;
 				int k = 1;
-				while (temp1 >= (temp * BigFloat::TEN)) {
-					temp = temp * BigFloat::TEN;
+				while (temp1 >= (temp * 10)) {
+					temp = temp * 10;
 					k *= 10;//扩大倍数
 				}
 				while (temp1 >= temp) {

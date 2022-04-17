@@ -7,6 +7,7 @@
 #include "MFCApplication1.h"
 #include "MFCApplication1Dlg.h"
 #include "afxdialogex.h"
+#include "SetAccDlg.h"
 #include<CString>
 #include<string>
 #include<windows.h>
@@ -69,6 +70,7 @@ void CMFCApplication1Dlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT1, Cstr);
 	DDX_Text(pDX, IDC_EDIT2, Cstr1);
+	DDX_Control(pDX, IDC_EDIT1, m_edit);
 }
 
 BEGIN_MESSAGE_MAP(CMFCApplication1Dlg, CDialogEx)
@@ -95,6 +97,8 @@ BEGIN_MESSAGE_MAP(CMFCApplication1Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON14, &CMFCApplication1Dlg::OnBnClickedButton14)
 	ON_BN_CLICKED(IDC_BUTTON15, &CMFCApplication1Dlg::OnBnClickedButton15)
 	ON_BN_CLICKED(IDC_BUTTON16, &CMFCApplication1Dlg::OnBnClickedButton16)
+	ON_EN_CHANGE(IDC_EDIT1, &CMFCApplication1Dlg::OnEnChangeEdit1)
+	ON_COMMAND(ID_ACCURACY, &CMFCApplication1Dlg::OnAccuracy)
 END_MESSAGE_MAP()
 
 
@@ -137,9 +141,13 @@ BOOL CMFCApplication1Dlg::OnInitDialog()
 	num2 = 0;
 	str1 = "0";
 	str = "0";
+	tag = "";
+	the_one = true;
+	flag = false;
+	putin = false;
 
-	tag = true;
-	flag = true;
+	m_Font.CreatePointFont(180, _T("黑体"));
+	m_edit.SetFont(&m_Font);
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -196,7 +204,12 @@ HCURSOR CMFCApplication1Dlg::OnQueryDragIcon()
 
 void CMFCApplication1Dlg::OnBnClickedButton1()
 {// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	if (str == "0")
 		str = "1";
 	else
@@ -208,7 +221,12 @@ void CMFCApplication1Dlg::OnBnClickedButton1()
 void CMFCApplication1Dlg::OnBnClickedButton2()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	if (str == "0")
 		str = "2";
 	else
@@ -221,7 +239,12 @@ void CMFCApplication1Dlg::OnBnClickedButton2()
 void CMFCApplication1Dlg::OnBnClickedButton3()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	if (str == "0")
 		str = "3";
 	else
@@ -234,7 +257,12 @@ void CMFCApplication1Dlg::OnBnClickedButton3()
 void CMFCApplication1Dlg::OnBnClickedButton4()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	if (str == "0")
 		str = "4";
 	else
@@ -247,7 +275,12 @@ void CMFCApplication1Dlg::OnBnClickedButton4()
 void CMFCApplication1Dlg::OnBnClickedButton5()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	if (str == "0")
 		str = "5";
 	else
@@ -260,7 +293,12 @@ void CMFCApplication1Dlg::OnBnClickedButton5()
 void CMFCApplication1Dlg::OnBnClickedButton6()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	if (str == "0")
 		str = "6";
 	else
@@ -273,7 +311,12 @@ void CMFCApplication1Dlg::OnBnClickedButton6()
 void CMFCApplication1Dlg::OnBnClickedButton7()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	if (str == "0")
 		str = "7";
 	else
@@ -287,7 +330,12 @@ void CMFCApplication1Dlg::OnBnClickedButton7()
 void CMFCApplication1Dlg::OnBnClickedButton8()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	if (str == "0")
 		str = "8";
 	else
@@ -300,7 +348,12 @@ void CMFCApplication1Dlg::OnBnClickedButton8()
 void CMFCApplication1Dlg::OnBnClickedButton9()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	if (str == "0")
 		str = "9";
 	else
@@ -313,7 +366,12 @@ void CMFCApplication1Dlg::OnBnClickedButton9()
 void CMFCApplication1Dlg::OnBnClickedButton0()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	if (str == "0")
 		str = "0";
 	else
@@ -326,7 +384,12 @@ void CMFCApplication1Dlg::OnBnClickedButton0()
 void CMFCApplication1Dlg::OnBnClickedButton10()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	string::size_type idx = str.find(".");
 	if (idx == string::npos)
 		str += ".";
@@ -338,7 +401,12 @@ void CMFCApplication1Dlg::OnBnClickedButton10()
 void CMFCApplication1Dlg::OnBnClickedButton17()//CE
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
 	str = "0";
 	Cstr = str.c_str();
 	UpdateData(false);
@@ -348,25 +416,33 @@ void CMFCApplication1Dlg::OnBnClickedButton17()//CE
 void CMFCApplication1Dlg::OnBnClickedButton18()//C
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = false;
+	flag = false;
 	str1 = "0";
 	str = "0";
-	tag = true;
+	tag = "";
+	the_one = true;
 	result = 0;
 	Cstr = str.c_str();
+	Cstr1 = "";
 	UpdateData(false);
-	GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
 }
 
 
 void CMFCApplication1Dlg::OnBnClickedButton19()//←
 {
 	// TODO: 在此添加控件通知处理程序代码
-	flag = true;
+	putin = true;
 	if (str.length() == 1)
 		str = "0";
 	else
 		str.pop_back();
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+		str = result.toString();
+	}
 	Cstr = str.c_str();
 	UpdateData(false);
 }
@@ -388,39 +464,49 @@ void CMFCApplication1Dlg::OnBnClickedButton11()//+/-
 void CMFCApplication1Dlg::OnBnClickedButton12()//+
 {
 	// TODO: 在此添加控件通知处理程序代码
-	if (tag) {
+	if (the_one) {
+		putin = false;
 		UpdateData(true);
 		str = CW2A(Cstr.GetString());
-		tag = false;
-		result = str;
+		the_one = false;
+		tag = "+";
+		try {
+			result = str;
+		}
+		catch (BigFloatException& e) {
+			Cstr = e.err_msg().c_str();
+			AfxMessageBox(Cstr);
+			OnBnClickedButton18();
+			return;
+		}
 	}
 	else {
-		UpdateData(true);
-		str = CW2A(Cstr.GetString());
-		if (str1.find("+") != string::npos)
-			result += str;
-		else if (str1.find("×") != string::npos)
-			result *= str;
-		else if (str1.find("÷") != string::npos) {
+		if (putin) {
+			UpdateData(true);
+			str = CW2A(Cstr.GetString());
+			putin = false;
 			try {
-				result /= str;
+				if (tag == "+")
+					result += str;
+				else if (tag == "×")
+					result *= str;
+				else if (tag == "÷")
+					result /= str;
+				else if (tag == "-")
+					result -= str;
 			}
-			catch (ZeroException e) {
-				Cstr = e.errorText().c_str();
+			catch (BigFloatException& e) {
+				Cstr = e.err_msg().c_str();
 				AfxMessageBox(Cstr);
-				flag = true;
-				str1 = "0";
-				str = "0";
-				tag = true;
-				result = 0;
-				Cstr = str.c_str();
-				UpdateData(false);
-				GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
+				OnBnClickedButton18();
+				return;
 			}
+			tag = "+";
 		}
-		else if (str1.find("-") != string::npos)
-			result -= str;
-		
+		else {
+			tag = "+";
+			
+		}
 	}	
 	str = result.toString();
 	str1 = result.toString() + "+";
@@ -428,44 +514,58 @@ void CMFCApplication1Dlg::OnBnClickedButton12()//+
 	Cstr1 = str1.c_str();
 	UpdateData(false);
 	str = "0";
+	flag = false;
 }
 
 
 void CMFCApplication1Dlg::OnBnClickedButton13()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	if (tag) {
+	if (the_one) {
+		putin = false;
 		UpdateData(true);
 		str = CW2A(Cstr.GetString());
-		tag = false;
-		result = str;
+		the_one = false;
+		tag = "-";
+		try {
+			result = str;
+		}
+		catch (BigFloatException& e) {
+			Cstr = e.err_msg().c_str();
+			AfxMessageBox(Cstr);
+			OnBnClickedButton18();
+			return;
+		}
+		
 	}
 	else {
-		UpdateData(true);
-		str = CW2A(Cstr.GetString());
-		if (str1.find("+") != string::npos)
-			result += str;
-		else if (str1.find("×") != string::npos)
-			result *= str;
-		else if (str1.find("÷") != string::npos) {
+		if (putin) {
+			UpdateData(true);
+			str = CW2A(Cstr.GetString());
+			putin = false;
 			try {
-				result /= str;
+				if (tag == "+")
+					result += str;
+				else if (tag == "×")
+					result *= str;
+				else if (tag == "÷")
+					result /= str;
+				else if (tag == "-")
+					result -= str;
 			}
-			catch (ZeroException e) {
-				Cstr = e.errorText().c_str();
+			catch (BigFloatException& e) {
+				Cstr = e.err_msg().c_str();
 				AfxMessageBox(Cstr);
-				flag = true;
-				str1 = "0";
-				str = "0";
-				tag = true;
-				result = 0;
-				Cstr = str.c_str();
-				UpdateData(false);
-				GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
+				OnBnClickedButton18();
+				return;
 			}
+			tag = "-";
 		}
-		else if (str1.find("-") != string::npos)
-			result -= str;
+		else {
+			tag = "-";
+			
+		}
+
 	}
 	str = result.toString();
 	str1 = result.toString() + "-";
@@ -473,44 +573,56 @@ void CMFCApplication1Dlg::OnBnClickedButton13()
 	Cstr1 = str1.c_str();
 	UpdateData(false);
 	str = "0";
+	flag = false;
 }
 
 
 void CMFCApplication1Dlg::OnBnClickedButton14()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	if (tag) {
+	if (the_one) {
+		putin = false;
 		UpdateData(true);
 		str = CW2A(Cstr.GetString());
-		tag = false;
-		result = str;
+		the_one = false;
+		tag = "×";
+		try {
+			result = str;
+		}
+		catch (BigFloatException& e) {
+			Cstr = e.err_msg().c_str();
+			AfxMessageBox(Cstr);
+			OnBnClickedButton18();
+			return;
+		}
 	}
 	else {
-		UpdateData(true);
-		str = CW2A(Cstr.GetString());
-		if (str1.find("+") != string::npos)
-			result += str;
-		else if (str1.find("×") != string::npos)
-			result *= str;
-		else if (str1.find("÷") != string::npos) {
+		if (putin) {
+			UpdateData(true);
+			str = CW2A(Cstr.GetString());
+			putin = false;
 			try {
-				result /= str;
+				if (tag == "+")
+					result += str;
+				else if (tag == "×")
+					result *= str;
+				else if (tag == "÷")
+					result /= str;
+				else if (tag == "-")
+					result -= str;
 			}
-			catch (ZeroException e) {
-				Cstr = e.errorText().c_str();
+			catch (BigFloatException& e) {
+				Cstr = e.err_msg().c_str();
 				AfxMessageBox(Cstr);
-				flag = true;
-				str1 = "0";
-				str = "0";
-				tag = true;
-				result = 0;
-				Cstr = str.c_str();
-				UpdateData(false);
-				GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
+				OnBnClickedButton18();
+				return;
 			}
+			tag = "×";
 		}
-		else if (str1.find("-") != string::npos)
-			result -= str;
+		else {
+			tag = "×";
+		}
+
 	}
 	str = result.toString();
 	str1 = result.toString() + "×";
@@ -518,44 +630,56 @@ void CMFCApplication1Dlg::OnBnClickedButton14()
 	Cstr1 = str1.c_str();
 	UpdateData(false);
 	str = "0";
+	flag = false;
 }
 
 
 void CMFCApplication1Dlg::OnBnClickedButton15()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	if (tag) {
+	if (the_one) {
+		putin = false;
 		UpdateData(true);
 		str = CW2A(Cstr.GetString());
-		tag = false;
-		result = str;
+		the_one = false;
+		tag = "÷";
+		try {
+			result = str;
+		}
+		catch (BigFloatException& e) {
+			Cstr = e.err_msg().c_str();
+			AfxMessageBox(Cstr);
+			OnBnClickedButton18();
+			return;
+		}
 	}
 	else {
-		UpdateData(true);
-		str = CW2A(Cstr.GetString());
-		if (str1.find("+") != string::npos)
-			result += str;
-		else if (str1.find("×") != string::npos)
-			result *= str;
-		else if (str1.find("÷") != string::npos) {
+		if (putin) {
+			UpdateData(true);
+			str = CW2A(Cstr.GetString());
+			putin = false;
 			try {
-				result /= str;
+				if (tag == "+")
+					result += str;
+				else if (tag == "×")
+					result *= str;
+				else if (tag == "÷")
+					result /= str;
+				else if (tag == "-")
+					result -= str;
 			}
-			catch (ZeroException e) {
-				Cstr = e.errorText().c_str();
+			catch (BigFloatException& e) {
+				Cstr = e.err_msg().c_str();
 				AfxMessageBox(Cstr);
-				flag = true;
-				str1 = "0";
-				str = "0";
-				tag = true;
-				result = 0;
-				Cstr = str.c_str();
-				UpdateData(false);
-				GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
+				OnBnClickedButton18();
+				return;
 			}
+			tag = "÷";
 		}
-		else if (str1.find("-") != string::npos)
-			result -= str;
+		else {
+			tag = "÷";
+		}
+
 	}
 	str = result.toString();
 	str1 = result.toString() + "÷";
@@ -563,45 +687,42 @@ void CMFCApplication1Dlg::OnBnClickedButton15()
 	Cstr1 = str1.c_str();
 	UpdateData(false);
 	str = "0";
+	flag = false;
 }
 
 
 void CMFCApplication1Dlg::OnBnClickedButton16()//=
 {
 	// TODO: 在此添加控件通知处理程序代码
-	UpdateData(true);
-	str = CW2A(Cstr.GetString());
-	str1 = str1 + str +"=";
-	if (str1.find("+") != string::npos)
-		result += str;	
-	else if (str1.find("×") != string::npos)
-		result *= str;
-	else if (str1.find("÷") != string::npos) {
+	if (putin) {
+		putin = false;
+		UpdateData(true);
+		str = CW2A(Cstr.GetString());
+		str1 = str1 + str + "=";
 		try {
-			result /= str;
+			if (tag == "+")
+			result += str;
+		else if (tag == "×")
+			result *= str;
+		else if (tag == "÷") 			
+				result /= str;
+			else if (tag == "-")
+			result -= str;
 		}
-		catch (ZeroException e) {
-			Cstr = e.errorText().c_str();
+		catch (BigFloatException& e) {
+			Cstr = e.err_msg().c_str();
 			AfxMessageBox(Cstr);
-			flag = true;
-			str1 = "0";
-			str = "0";
-			tag = true;
-			result = 0;
-			Cstr = str.c_str();
-			UpdateData(false);
-			GetDlgItem(IDC_EDIT2)->SetWindowText(_T(""));
+			OnBnClickedButton18();
+			return;
 		}
-		
+		str = result.toString();
+		Cstr = str.c_str();
+		Cstr1 = str1.c_str();
+		UpdateData(false);
+		str = "0";
+		flag = true;
 	}
-		
-	else if (str1.find("-") != string::npos)
-		result -= str;
-	str = result.toString();
-	Cstr = str.c_str();
-	Cstr1 = str1.c_str();
-	UpdateData(false);
-	str = "0";
+	
 }
 
 
@@ -666,4 +787,29 @@ BOOL CMFCApplication1Dlg::PreTranslateMessage(MSG* pMsg)
 		}
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CMFCApplication1Dlg::OnEnChangeEdit1()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，它将不
+	// 发送此通知，除非重写 CDialogEx::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
+	putin = true;
+	if (flag) {
+		the_one = true;
+		flag = false;
+		Cstr1 = "";
+	}
+}
+
+
+void CMFCApplication1Dlg::OnAccuracy()
+{
+	// TODO: 在此添加命令处理程序代码
+	SetAccDlg dlg;
+	dlg.DoModal();
 }
